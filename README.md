@@ -1,6 +1,6 @@
 # Billing Micro Frontend
 
-Este projeto é um **frontend de faturamento** desenvolvido com **Angular**. Ele utiliza **Angular Federation** para implementar uma arquitetura de micro frontends, permitindo a integração de múltiplos módulos e aplicações dentro de um único front-end. A configuração de **SCSS** para estilos também está inclusa e o projeto usa **esbuild** para otimizar o processo de build.
+Este projeto é um **frontend de faturamento** desenvolvido com **Angular** e utiliza **Angular Federation** para implementar uma arquitetura de **micro frontends**. Isso permite a integração de múltiplos módulos e aplicações dentro de um único front-end. A configuração de **SCSS** para estilos também está inclusa e o projeto utiliza **esbuild** para otimizar o processo de build.
 
 ## Sumário
 
@@ -18,32 +18,76 @@ Este projeto é um **frontend de faturamento** desenvolvido com **Angular**. Ele
 
 ## Visão Geral
 
-Este projeto possui dois módulos principais:
+Este projeto é composto por dois módulos principais:
 
 1. **Billing**: O módulo de faturamento, que contém a lógica principal da aplicação.
 2. **Billing Host**: O módulo host que integra o `billing` e outros micro frontends utilizando **Angular Federation**.
 
-Esses módulos são otimizados com o `esbuild`, uma ferramenta de bundling extremamente rápida, e são configurados para produção e desenvolvimento, com builds separados e customizados para cada um.
+Esses módulos são otimizados com o **esbuild**, uma ferramenta de bundling extremamente rápida, garantindo uma construção eficiente tanto para ambientes de produção quanto de desenvolvimento.
 
 ## Estrutura do Projeto
 
 O projeto segue a estrutura de um **monorepo**, com os dois módulos principais localizados dentro do diretório `projects/`. A estrutura básica é a seguinte:
 
 ```plaintext
-/projects
-  /billing
-    /src
-    /public
-  /billing-host
-    /src
-    /public
+projects/                                           # Diretório raiz dos projetos
+├── billing/                                        # Aplicativo Angular de Faturamento (ou biblioteca)
+│   ├── src/
+│   │   ├── app/                                    # Diretório principal do aplicativo de Billing
+│   │   │   ├── components/                         # Componentes reutilizáveis (Angular components)
+│   │   │   ├── directives/                         # Diretivas personalizadas
+│   │   │   ├── pipes/                              # Pipes personalizados
+│   │   │   ├── services/                           # Serviços e lógica de negócio
+│   │   │   ├── models/                             # Modelos ou interfaces TypeScript
+│   │   │   ├── pages/                              # Componentes principais de páginas
+│   │   │   ├── app.component.html                  # Template HTML do componente raiz
+│   │   │   ├── app.component.scss                  # Estilos do componente raiz
+│   │   │   ├── app.component.ts                    # Lógica do componente raiz
+│   │   │   ├── app.config.ts                       # Configurações globais do app (ex: rotas, tokens)
+│   │   │   └── app.routes.ts                       # Definições de rotas principais
+│   │   ├── environments/                           # Configurações específicas de ambiente (ex: dev, prod)
+│   │   │   ├── environment.ts                      # Configuração para o ambiente de desenvolvimento
+│   │   │   ├── environment.prod.ts                 # Configuração para o ambiente de produção
+│   │   ├── bootstrap.ts                            # Arquivo de inicialização do aplicativo
+│   │   ├── index.html                              # Arquivo HTML principal (página de entrada)
+│   │   ├── main.ts                                 # Ponto de entrada para a inicialização do app
+│   │   ├── styles.scss                             # Arquivo principal de estilos (SASS ou CSS)
+│   │   ├── federation.config.js                    # Configuração do Webpack Federation (se estiver usando MFE)
+│   │   ├── tsconfig.app.json                       # Configuração do TypeScript para o aplicativo
+│   │   ├── tsconfig.federation.json                # Configuração do TypeScript para a federação de módulos
+│   │   └── tsconfig.spec.json                      # Configuração do TypeScript para os testes
+├── billing-host/                                   # Aplicativo Angular principal (host do micro frontend)
+│   ├── src/
+│   │   ├── app/                                    # Diretório principal do aplicativo host
+│   │   │   ├── components/                         # Componentes reutilizáveis (Angular components)
+│   │   │   ├── directives/                         # Diretivas personalizadas
+│   │   │   ├── pipes/                              # Pipes personalizados
+│   │   │   ├── services/                           # Serviços e lógica de negócio
+│   │   │   ├── models/                             # Modelos ou interfaces TypeScript
+│   │   │   ├── pages/                              # Componentes principais de páginas
+│   │   │   ├── app.component.html                  # Template HTML do componente raiz
+│   │   │   ├── app.component.scss                  # Estilos do componente raiz
+│   │   │   ├── app.component.ts                    # Lógica do componente raiz
+│   │   │   ├── app.config.ts                       # Configurações globais do app
+│   │   │   └── app.routes.ts                       # Definições de rotas principais
+│   │   ├── environments/                           # Configurações específicas de ambiente (ex: dev, prod)
+│   │   │   ├── environment.ts                      # Configuração para o ambiente de desenvolvimento
+│   │   │   ├── environment.prod.ts                 # Configuração para o ambiente de produção
+│   │   ├── bootstrap.ts                            # Arquivo de inicialização do aplicativo
+│   │   ├── index.html                              # Arquivo HTML principal (página de entrada)
+│   │   ├── main.ts                                 # Ponto de entrada para a inicialização do app
+│   │   ├── styles.scss                             # Arquivo principal de estilos (SASS ou CSS)
+│   │   ├── federation.config.js                    # Configuração do Webpack Federation (se estiver usando MFE)
+│   │   ├── tsconfig.app.json                       # Configuração do TypeScript para o aplicativo
+│   │   ├── tsconfig.federation.json                # Configuração do TypeScript para a federação de módulos
+│   │   └── tsconfig.spec.json                      # Configuração do TypeScript para os testes
 ```
 
 ## Instalação e Configuração
 
 ### 1. Clone o Repositório
 
-Primeiro, faça o clone do repositório para a sua máquina local:
+Clone o repositório para a sua máquina local:
 
 ```bash
 git clone <url-do-repositorio>
@@ -52,7 +96,7 @@ cd <diretorio-do-projeto>
 
 ### 2. Instale as Dependências
 
-O projeto utiliza o `npm` para gerenciamento de pacotes. Execute o seguinte comando para instalar as dependências:
+Instale as dependências do projeto usando o npm:
 
 ```bash
 npm install
@@ -67,11 +111,11 @@ O projeto suporta dois ambientes principais:
 
 ### Esbuild
 
-O **esbuild** é utilizado para o processo de build. Ele é significativamente mais rápido que o Webpack e garante uma construção eficiente tanto para produção quanto para desenvolvimento.
+O **esbuild** é utilizado para o processo de build, sendo significativamente mais rápido que o Webpack, garantindo uma construção eficiente tanto para produção quanto para desenvolvimento.
 
 ## Comandos e Scripts
 
-O projeto possui vários comandos configurados no `package.json` para facilitar a execução de tarefas comuns. Abaixo estão alguns dos comandos principais:
+O projeto possui vários scripts configurados no `package.json` para facilitar a execução de tarefas comuns. Abaixo estão os comandos principais:
 
 ### Scripts de Desenvolvimento
 
@@ -135,8 +179,6 @@ O projeto possui vários comandos configurados no `package.json` para facilitar 
 
 ### Dependências principais
 
-As principais dependências do projeto incluem:
-
 - **@angular/* (18.2.0)**: Angular framework, incluindo animações, formulários, roteamento, etc.
 - **@angular-architects/native-federation**: Usado para configurar a arquitetura de micro frontends com Angular Federation.
 - **es-module-shims**: Para garantir a compatibilidade com módulos ES.
@@ -148,7 +190,9 @@ As principais dependências do projeto incluem:
 As dependências de desenvolvimento incluem ferramentas para build, testes e linting:
 
 - **@angular-devkit/build-angular**: Ferramenta de build do Angular.
-- **@angular/cli**: CLI do Angular para facilitar o desenvolvimento.
+- **
+
+@angular/cli**: CLI do Angular para facilitar o desenvolvimento.
 - **karma**: Framework de testes unitários para Angular.
 - **webpack**: Usado para construção e empacotamento do código.
 
@@ -193,13 +237,13 @@ As dependências de desenvolvimento incluem ferramentas para build, testes e lin
 
 ## Internacionalização (i18n)
 
-O projeto é configurado para suportar internacionalização (i18n). Para extrair as strings de tradução, utilize o comando abaixo:
+O projeto é configurado para suportar internacionalização (i18n). Para extrair as strings de tradução, use o seguinte comando:
 
 ```bash
 ng extract-i18n
 ```
 
-Este comando gera um arquivo de tradução contendo todas as strings de texto para que possam ser traduzidas para outros idiomas.
+Esse comando gera um arquivo de tradução contendo todas as strings de texto que podem ser traduzidas para outros idiomas.
 
 ## Testes
 
@@ -207,7 +251,7 @@ Os testes são configurados usando o **Karma** e o **Jasmine**. O Karma é respo
 
 ### Configuração do Karma
 
-O arquivo de configuração do Karma (`karma.conf.js`) define como os testes serão executados. Abaixo estão os detalhes principais dessa configuração:
+A configuração do Karma (`karma.conf.js`) define como os testes serão executados. Abaixo estão os detalhes principais dessa configuração:
 
 - **Frameworks**: Usamos o **Jasmine** para os testes unitários.
 - **Arquivos**: Todos os arquivos `.ts` e `.spec.ts` nos diretórios `billing` e `billing-host` são incluídos para teste.
@@ -241,9 +285,7 @@ module.exports = function(config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch:
-
- true,
+    autoWatch: true,
     browsers: ['Chrome'],
     singleRun: true,
     concurrency: Infinity
@@ -272,3 +314,99 @@ Se você deseja executar os testes de forma personalizada, como rodar os testes 
   ```bash
   npm run test:billing-host
   ```
+
+## Principais Comandos `ng` do Angular CLI
+
+Aqui estão alguns dos principais comandos que você pode usar durante o desenvolvimento de uma aplicação Angular:
+
+### Criar um novo projeto Angular:
+```bash
+ng new nome-do-projeto
+```
+
+### Servir o projeto localmente:
+```bash
+ng serve
+```
+Inicia o servidor de desenvolvimento e observa as mudanças no código, recarregando automaticamente.
+
+### Criar um novo componente:
+```bash
+ng generate component nome-do-componente
+```
+ou
+```bash
+ng g c nome-do-componente
+```
+
+### Criar um novo serviço:
+```bash
+ng generate service nome-do-serviço
+```
+ou
+```bash
+ng g s nome-do-serviço
+```
+
+### Criar um novo módulo:
+```bash
+ng generate module nome-do-módulo
+```
+ou
+```bash
+ng g m nome-do-módulo
+```
+
+### Rodar os testes unitários:
+```bash
+ng test
+```
+Executa os testes utilizando o **Karma**.
+
+### Rodar os testes end-to-end (E2E):
+```bash
+ng e2e
+```
+Executa os testes **E2E** com o **Protractor**.
+
+### Build para produção:
+```bash
+ng build --prod
+```
+Realiza a compilação otimizada para produção.
+
+### Gerar um novo Pipe:
+```bash
+ng generate pipe nome-do-pipe
+```
+ou
+```bash
+ng g p nome-do-pipe
+```
+
+### Gerar uma nova Diretiva:
+```bash
+ng generate directive nome-da-diretiva
+```
+ou
+```bash
+ng g d nome-da-diretiva
+```
+
+### Atualizar as dependências do Angular:
+```bash
+ng update
+```
+
+### Verificar as dependências e versões do Angular:
+```bash
+ng version
+```
+
+## Principais Tecnologias Usadas
+
+- **Angular**: Framework front-end para construção da aplicação.
+- **Webpack Module Federation**: Para integrar micro frontends de maneira eficiente.
+- **TypeScript**: Linguagem para desenvolvimento do código.
+- **SASS/SCSS**: Para a estilização dos componentes.
+- **Karma/Jasmine**: Para os testes unitários.

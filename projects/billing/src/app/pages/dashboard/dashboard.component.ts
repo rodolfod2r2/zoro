@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CustomRouterLinkDirective } from '../directives/custom-router-link.directive';
+import { CustomRouterLinkDirective } from '../../directives/custom-router-link.directive';
 
 @Component({
   selector: 'app-dashboard',
