@@ -1,0 +1,62 @@
+stages:
+  - install
+  - build
+  - test
+  - deploy
+
+# Job de instalação
+install:
+  image: node:18
+  script:
+    - npm install
+
+# Jobs de build separados para os dois projetos
+build:billing:
+  image: node:18
+  stage: build
+  script:
+    - npm run build:billing
+
+build:billing-host:
+  image: node:18
+  stage: build
+  script:
+    - npm run build:billing-host
+
+# Jobs de teste separados para os dois projetos
+test:billing:
+  image: node:18
+  stage: test
+  script:
+    - npm install
+    - npm run test:billing  # Execute os testes para o projeto billing
+  artifacts:
+    when: always
+    reports:
+      junit: coverage/unit-test-report.xml  # Relatório JUnit para o projeto billing
+    expire_in: 1 week
+
+test:billing-host:
+  image: node:18
+  stage: test
+  script:
+    - npm install
+    - npm run test:billing-host  # Execute os testes para o projeto billing-host
+  artifacts:
+    when: always
+    reports:
+      junit: coverage/unit-test-report.xml  # Relatório JUnit para o projeto billing-host
+    expire_in: 1 week
+
+# Jobs de deploy separados para os dois projetos
+deploy:billing:
+  image: node:18
+  stage: deploy
+  script:
+    - echo "Deploying Billing project to production..."  # Adicione aqui o script de deploy do projeto billing
+
+deploy:billing-host:
+  image: node:18
+  stage: deploy
+  script:
+    - echo "Deploying Billing Host project to production..."  # Adicione aqui o script de deploy do projeto billing-host

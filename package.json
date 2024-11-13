@@ -6,10 +6,17 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:billing": "ng serve billing",
+    "build:billing": "ng build billing",
+    "test:billing": "ng test billing",
+    "start:billing-host": "ng serve billing-host",
+    "build:billing-host": "ng build billing-host",
+    "test:billing-host": "ng test billing-host"
   },
   "private": true,
   "dependencies": {
+    "@angular-architects/native-federation": "^18.2.2",
     "@angular/animations": "^18.2.0",
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",
@@ -18,11 +25,13 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "es-module-shims": "^1.5.12",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^18.2.11",
     "@angular/cli": "^18.2.11",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
@@ -32,6 +41,10 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2"
+    "karma-junit-reporter": "^2.0.1",
+    "karma-typescript": "^5.5.4",
+    "typescript": "~5.5.2",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   }
 }
